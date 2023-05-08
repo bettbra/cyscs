@@ -6,7 +6,7 @@ import scipy.sparse as sp
 import numpy as np
 
 
-def check_xys(x,y,s,m,n):
+def check_xys(x, y, s, m, n):
     """ Check that x, y, s are dense numpy arrays of the right shape, length
     and dtype.
 
@@ -30,7 +30,8 @@ def check_xys(x,y,s,m,n):
     if not_met(x.dtype == np.float64, y.dtype == np.float64, s.dtype == np.float64):
         raise ValueError("x, y, s must be numpy arrays with dtype = numpy.float64")
 
-def check_bc(b,c,m,n):
+
+def check_bc(b, c, m, n):
     """ Check that b, c are dense numpy arrays of the right shape, length
     and dtype.
 
@@ -51,7 +52,6 @@ def check_bc(b,c,m,n):
         raise ValueError("b, c must be numpy arrays with dtype = numpy.float64")
 
 
-
 def default_settings():
     """ Return a *copy* of the dictionary of the default CySCS solver settings.
     """
@@ -59,14 +59,14 @@ def default_settings():
     # todo: would be nice to grab defaults from C, but Cython doesn't
     # actually read C headerfiles, so it can't get the SCS macros
     # however, is possible if defaults are exposed as variables or function
-    stg_default = dict(normalize = True,
-                       scale = 1.0,
-                       rho_x = 1e-3,
-                       max_iters = 2500,
-                       eps = 1e-3,
-                       alpha = 1.5,
-                       cg_rate = 2.0,
-                       verbose = True,
+    stg_default = dict(normalize=True,
+                       scale=1.0,
+                       rho_x=1e-3,
+                       max_iters=2500,
+                       eps=1e-3,
+                       alpha=1.5,
+                       cg_rate=2.0,
+                       verbose=True,
                        use_indirect=False)
     return stg_default
 
@@ -95,6 +95,7 @@ def format_and_copy_cone(cone_in):
 
     return cone_out
 
+
 def cone_len(cone):
     total = 0
 
@@ -122,6 +123,7 @@ def cone_len(cone):
         total += 3*len(cone['p'])
 
     return total
+
 
 def not_met(*vargs):
     return not all(vargs)
@@ -158,8 +160,8 @@ def check_data(data, cone):
         warn("Converting A to a scipy CSC (compressed sparse column) matrix; may take a while.")
         A = A.tocsc()
 
-    m,n = A.shape
-    check_bc(b,c,m,n)
+    m, n = A.shape
+    check_bc(b, c, m, n)
 
     if not_met(A.indptr.dtype == np.int64, A.indices.dtype == np.int64):
         warn("Converting A.indptr and A.indices to arrays with dtype = numpy.int64")
@@ -177,8 +179,7 @@ def check_data(data, cone):
     if not_met(cone_len(cone) > 0, A.shape[0] == cone_len(cone)):
         raise ValueError('The cones must match the number of rows of A.')
 
-
     # return a dict of (possibly modified) problem data
     # we do not modify the original dictionary or the original numpy arrays or matrices
     # if no modifications are needed, these are the *same* A, b, c matrices
-    return dict(A=A,b=b,c=c)
+    return dict(A=A, b=b, c=c)

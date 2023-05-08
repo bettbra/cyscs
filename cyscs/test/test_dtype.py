@@ -3,12 +3,14 @@ import pytest
 import cyscs.examples as ex
 import numpy as np
 
+
 def test_b():
     data, cone = ex.simple_lp()
     data['b'] = data['b'].astype(np.float32)
 
     with pytest.raises(ValueError):
         sol = scs.solve(data, cone)
+
 
 def test_c():
     data, cone = ex.simple_lp()
@@ -17,12 +19,14 @@ def test_c():
     with pytest.raises(ValueError):
         sol = scs.solve(data, cone)
 
+
 def test_A_data():
     data, cone = ex.simple_lp()
     data['A'].data = data['A'].data.astype(np.float32)
 
     with pytest.warns(UserWarning):
         sol = scs.solve(data, cone)
+
 
 def test_A_indices():
     data, cone = ex.simple_lp()
@@ -31,12 +35,14 @@ def test_A_indices():
     with pytest.warns(UserWarning):
         sol = scs.solve(data, cone)
 
+
 def test_A_indptr():
     data, cone = ex.simple_lp()
     data['A'].indptr = data['A'].indptr.astype(np.int32)
 
     with pytest.warns(UserWarning):
         sol = scs.solve(data, cone)
+
 
 def test_numdim_b():
     data, cone = ex.simple_lp()
@@ -47,6 +53,7 @@ def test_numdim_b():
     with pytest.raises(ValueError):
         sol = scs.solve(data, cone)
 
+
 def test_numdim_b():
     data, cone = ex.simple_lp()
     b = data['b']
@@ -56,6 +63,7 @@ def test_numdim_b():
     with pytest.raises(ValueError):
         sol = scs.solve(data, cone)
 
+
 def test_b_len():
     data, cone = ex.simple_lp()
     b = data['b']
@@ -64,6 +72,7 @@ def test_b_len():
 
     with pytest.raises(ValueError):
         sol = scs.solve(data, cone)
+
 
 def test_b_len_workspace():
     data, cone = ex.simple_lp()
@@ -82,6 +91,7 @@ def test_b_len_workspace():
     with pytest.raises(ValueError):
         work.data['b'] = b
         work.solve()
+
 
 def test_b_len_workspace2():
     data, cone = ex.simple_lp()
@@ -112,6 +122,7 @@ def test_c_len_workspace():
     with pytest.raises(ValueError):
         work.data['c'] = c
         work.solve()
+
 
 def test_c_len_workspace2():
     data, cone = ex.simple_lp()
@@ -152,5 +163,3 @@ def test_xys():
     # no value error because we copy the list values to an existing float64 array
     ws = dict(x=[1]*n, y=np.ones(m), s=np.ones(m))
     work.solve(warm_start = ws)
-
-

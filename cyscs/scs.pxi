@@ -149,7 +149,6 @@ cdef c_Cone stuff_c_cone(dict cone):
     return c_cone    
 
 
-
 cdef c_Sol stuff_c_sol(dict sol):
     """ Returns a filled-out C struct for SCS c_Sol.
 
@@ -165,6 +164,7 @@ cdef c_Sol stuff_c_sol(dict sol):
         scs_float[:] s = sol['s']
 
     return c_Sol(&x[0], &y[0], &s[0])
+
 
 cdef c_AMatrix stuff_c_amatrix(A):
     """ Returns a filled-out C struct for SCS c_Amatrix.
@@ -188,4 +188,3 @@ cdef c_AMatrix stuff_c_amatrix(A):
     indptr = A.indptr
 
     return c_AMatrix(&data[0], &ind[0], &indptr[0], m, n)
-

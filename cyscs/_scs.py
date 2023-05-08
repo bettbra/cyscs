@@ -99,6 +99,7 @@ def solve(data, cone, warm_start=None, **settings):
 
     return sol
 
+
 class Workspace(object):
     """ `Workspace` objects cache SCS solver information to be reused between solves.
 
@@ -234,7 +235,6 @@ class Workspace(object):
             for key in 'x', 'y', 's':
                 sol[key][:] = warm_start[key]
 
-
         check_xys(sol['x'], sol['y'], sol['s'], self._m, self._n)
         check_bc(self.data['b'],self.data['c'], self._m, self._n)
 
@@ -247,4 +247,3 @@ class Workspace(object):
         sol['info'] = self.info
 
         return sol
-

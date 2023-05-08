@@ -9,6 +9,7 @@ Functions return cone, data, and (possibly) the known solution.
 import numpy as np
 import scipy.sparse as sp
 
+
 def simple_lp():
     ij = np.array([[0,1,2,3],[0,1,2,3]])
     A = sp.csc_matrix(([-1.,-1.,1.,1.], ij), (4,4))
@@ -19,6 +20,7 @@ def simple_lp():
     cone = {'l': 4}
 
     return dict(A=A,b=b,c=c), cone
+
 
 def simple_socp():
     """
@@ -43,6 +45,7 @@ def simple_socp():
     true_x = np.array([1,1, np.sqrt(2)], dtype=np.float64)
 
     return dict(A=A,b=b,c=c), cone, true_x
+
 
 def simple_sdp():
     """
@@ -72,6 +75,7 @@ def simple_sdp():
     true_x = np.array([ 1, -1, -1, 1, 1, 1], dtype=np.float64)
 
     return dict(A=A,b=b,c=c), cone, true_x
+
 
 def simple_ecp():
     """
@@ -128,6 +132,7 @@ def many_iter_ecp():
 
     return dict(A=A,b=b,c=c), cone
 
+
 def simple_pcp():
     A = sp.csc_matrix([[0,1,0],[0,0,1],[-1,0,0],[0,-1,0],[0,0,-1]], dtype=np.float64)
     A.indices = A.indices.astype(np.int64)
@@ -139,6 +144,7 @@ def simple_pcp():
     true_x = np.array([2**(1/.3), 1, -2])
 
     return dict(A=A,b=b,c=c), cone, true_x
+
 
 def l1(m=100, seed=0):
     """ Solve random least-l1 norm problem.
@@ -172,7 +178,7 @@ def l1(m=100, seed=0):
 
     data = {'A': At, 'b': bt, 'c': c}
     cone = {'l': 2 * n, 'f': m}
-    #opts = {'normalize': True}
+    # opts = {'normalize': True}
 
     # the unstuffed problem data
     extra = dict(C=C,d=d)

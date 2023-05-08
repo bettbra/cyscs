@@ -12,6 +12,7 @@ def test_cache():
 
     sol = work.solve()
 
+
 def test_settings():
     expected_keys = set(['normalize', 'use_indirect', 'scale', 'verbose',
                         'eps', 'cg_rate', 'max_iters', 'alpha', 'rho_x'])
@@ -50,6 +51,7 @@ def test_data_keys():
 
     assert set(work.data.keys()) == set(['b','c'])
 
+
 def test_A():
     data, cone, true_x = ex.simple_socp()
     work = scs.Workspace(data, cone)
@@ -79,6 +81,7 @@ def test_settings_change():
 
     assert work.settings['eps'] == 1e-6
 
+
 def test_warm_start():
     # if warm-starting, the input warm-start vector should not be modified
     data, cone, true_x = ex.simple_socp()
@@ -94,6 +97,7 @@ def test_warm_start():
 
     assert np.linalg.norm(sol['x'] - sol2['x']) > 0
     assert sol['x'] is not sol2['x']
+
 
 def test_many_iter_ecp():
     # warm starting with a solution at a lower tolerance should reduce
@@ -111,10 +115,5 @@ def test_many_iter_ecp():
 
     # use 1e-3 sol as warm start for 1e-4
     # extra digit only takes ~280 iters more
-    sol = work.solve(warm_start = sol, eps=1e-4)
+    sol = work.solve(warm_start=sol, eps=1e-4)
     assert sol['info']['iter'] < 300
-
-
-
-
-
